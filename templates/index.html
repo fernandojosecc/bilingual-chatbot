@@ -12,153 +12,248 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f0f2f5;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin: 0;
         }
 
         .chat-container {
-            width: 90%;
-            max-width: 800px;
-            height: 80vh;
+            width: 100%;
+            max-width: 600px;
+            height: 90vh;
+            max-height: 800px;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
         .chat-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            padding: 16px 20px;
+            text-align: left;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1c1e21;
+            margin-bottom: 4px;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: #65676b;
+            font-weight: 400;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            padding: 16px;
             overflow-y: auto;
-            background: #f8f9fa;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .message {
-            margin-bottom: 15px;
-            padding: 12px 16px;
-            border-radius: 18px;
-            max-width: 80%;
+            display: flex;
+            flex-direction: column;
+            max-width: 75%;
             word-wrap: break-word;
+            margin-bottom: 8px;
         }
 
         .user-message {
-            background: #007bff;
-            color: white;
-            margin-left: auto;
-            text-align: right;
+            align-self: flex-end;
         }
 
         .bot-message {
-            background: white;
-            border: 1px solid #e9ecef;
-            margin-right: auto;
+            align-self: flex-start;
+        }
+
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 4px;
+        }
+
+        .user-bubble {
+            background: #0084ff;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .bot-bubble {
+            background: #f0f2f5;
+            color: #1c1e21;
+            border-bottom-left-radius: 4px;
+        }
+
+        .english-text {
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .spanish-text {
+            font-weight: 400;
+            color: #65676b;
+            font-style: italic;
+        }
+
+        .bot-bubble .spanish-text {
+            color: #65676b;
+        }
+
+        .user-bubble .spanish-text {
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .chat-input-container {
-            padding: 20px;
+            padding: 16px 20px;
             background: white;
             border-top: 1px solid #e9ecef;
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            align-items: center;
         }
 
         .chat-input {
             flex: 1;
             padding: 12px 16px;
-            border: 2px solid #e9ecef;
-            border-radius: 25px;
-            font-size: 16px;
+            border: 1px solid #ccd0d5;
+            border-radius: 21px;
+            font-size: 15px;
             outline: none;
-            transition: border-color 0.3s;
+            transition: border-color 0.2s;
+            font-family: inherit;
+            background: #f0f2f5;
         }
 
         .chat-input:focus {
-            border-color: #667eea;
+            border-color: #0084ff;
+            background: white;
+        }
+
+        .chat-input::placeholder {
+            color: #8a8d91;
         }
 
         .send-button {
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px 16px;
+            background: #0084ff;
             color: white;
             border: none;
-            border-radius: 25px;
-            font-size: 16px;
+            border-radius: 21px;
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: background-color 0.2s;
+            min-width: 60px;
         }
 
         .send-button:hover {
-            transform: scale(1.05);
+            background: #0077e6;
         }
 
         .send-button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
+            background: #8a8d91;
         }
 
         .loading {
             display: none;
-            color: #6c757d;
+            color: #65676b;
+            font-size: 14px;
             font-style: italic;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
+            align-self: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .error-message {
+            background: #ffeef0;
+            border: 1px solid #ffa0b4;
+        }
+
+        .error-message .message-bubble {
+            background: #ffeef0;
+            color: #d93025;
         }
 
         .bilingual-response {
             white-space: pre-line;
         }
 
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            margin-right: auto;
-        }
-
         .retry-button {
-            background: #007bff;
+            background: #0084ff;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 15px;
+            padding: 6px 12px;
+            border-radius: 12px;
             cursor: pointer;
-            margin-top: 8px;
-            font-size: 14px;
+            margin-top: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            align-self: flex-start;
         }
 
         .retry-button:hover {
-            background: #0056b3;
+            background: #0077e6;
+        }
+
+        /* Mobile responsive design */
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 100%;
+                height: 100vh;
+                max-height: none;
+                border-radius: 0;
+            }
+
+            .chat-messages {
+                padding: 12px;
+            }
+
+            .chat-input-container {
+                padding: 12px 16px;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+
+            .header-title {
+                font-size: 16px;
+            }
+
+            .header-subtitle {
+                font-size: 13px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            🤖 Bilingual Chatbot - English & Español
+            <div class="header-title">Bilingual Chatbot</div>
+            <div class="header-subtitle">Fernando Contreras • AI Tools Specialist</div>
         </div>
         
         <div class="chat-messages" id="chatMessages">
             <div class="message bot-message">
-                <div class="bilingual-response">English: Hello! I'm your bilingual assistant. How can I help you today?
-
-Español: ¡Hola! Soy tu asistente bilingüe. ¿Cómo puedo ayudarte hoy?</div>
+                <div class="message-bubble bot-bubble">
+                    <div class="english-text">English: Hello! I'm your bilingual assistant. How can I help you today?</div>
+                    <div class="spanish-text">Español: ¡Hola! Soy tu asistente bilingüe. ¿Cómo puedo ayudarte hoy?</div>
+                </div>
             </div>
         </div>
         
@@ -169,7 +264,7 @@ Español: ¡Hola! Soy tu asistente bilingüe. ¿Cómo puedo ayudarte hoy?</div>
                 type="text" 
                 class="chat-input" 
                 id="messageInput" 
-                placeholder="Type your message here..."
+                placeholder="Type a message..."
                 onkeypress="handleKeyPress(event)"
             >
             <button class="send-button" id="sendButton" onclick="sendMessage()">
@@ -194,11 +289,29 @@ Español: ¡Hola! Soy tu asistente bilingüe. ¿Cómo puedo ayudarte hoy?</div>
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user-message' : isError ? 'bot-message error-message' : 'bot-message'}`;
             
-            const responseDiv = document.createElement('div');
-            responseDiv.className = 'bilingual-response';
-            responseDiv.textContent = content;
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = `message-bubble ${isUser ? 'user-bubble' : 'bot-bubble'}`;
             
-            messageDiv.appendChild(responseDiv);
+            // Parse bilingual content
+            const parts = content.split('Español:');
+            const englishPart = parts[0].replace('English:', '').trim();
+            const spanishPart = parts[1] ? parts[1].trim() : '';
+            
+            // Create English text
+            const englishDiv = document.createElement('div');
+            englishDiv.className = 'english-text';
+            englishDiv.textContent = englishPart;
+            bubbleDiv.appendChild(englishDiv);
+            
+            // Create Spanish text if exists
+            if (spanishPart) {
+                const spanishDiv = document.createElement('div');
+                spanishDiv.className = 'spanish-text';
+                spanishDiv.textContent = 'Español: ' + spanishPart;
+                bubbleDiv.appendChild(spanishDiv);
+            }
+            
+            messageDiv.appendChild(bubbleDiv);
             
             // Add retry button for certain errors
             if (retryCallback && isError) {
