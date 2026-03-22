@@ -124,6 +124,28 @@
         .bilingual-response {
             white-space: pre-line;
         }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            margin-right: auto;
+        }
+
+        .retry-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .retry-button:hover {
+            background: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -168,29 +190,41 @@ Español: ¡Hola! Soy tu asistente bilingüe. ¿Cómo puedo ayudarte hoy?</div>
             }
         }
 
-        function addMessage(content, isUser = false) {
+        function addMessage(content, isUser = false, isError = false, retryCallback = null) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.className = `message ${isUser ? 'user-message' : isError ? 'bot-message error-message' : 'bot-message'}`;
             
             const responseDiv = document.createElement('div');
             responseDiv.className = 'bilingual-response';
             responseDiv.textContent = content;
             
             messageDiv.appendChild(responseDiv);
+            
+            // Add retry button for certain errors
+            if (retryCallback && isError) {
+                const retryButton = document.createElement('button');
+                retryButton.className = 'retry-button';
+                retryButton.textContent = 'Try Again';
+                retryButton.onclick = retryCallback;
+                messageDiv.appendChild(retryButton);
+            }
+            
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        async function sendMessage() {
-            const message = messageInput.value.trim();
+        async function sendMessage(retryMessage = null) {
+            const message = retryMessage || messageInput.value.trim();
             
             if (!message) return;
             
-            // Add user message
-            addMessage(message, true);
+            // Add user message (only if not retrying)
+            if (!retryMessage) {
+                addMessage(message, true);
+                messageInput.value = '';
+            }
             
-            // Clear input and disable send button
-            messageInput.value = '';
+            // Disable send button and show loading
             sendButton.disabled = true;
             loading.style.display = 'block';
             
@@ -208,10 +242,21 @@ Español: ¡Hola! Soy tu asistente bilingüe. ¿Cómo puedo ayudarte hoy?</div>
                 if (response.ok) {
                     addMessage(data.response);
                 } else {
-                    addMessage(`Error: ${data.error}`);
+                    // Handle different error types with appropriate messages and retry options
+                    const errorMessage = data.error || 'An unknown error occurred.';
+                    const errorType = data.error_type || 'unknown';
+                    
+                    // Determine if retry should be offered
+                    const allowRetry = ['rate_limit', 'timeout', 'api'].includes(errorType);
+                    
+                    if (allowRetry) {
+                        addMessage(errorMessage, false, true, () => sendMessage(message));
+                    } else {
+                        addMessage(errorMessage, false, true);
+                    }
                 }
             } catch (error) {
-                addMessage(`Connection error: ${error.message}`);
+                addMessage('Connection error: Unable to reach the server. Please check your internet connection and try again.', false, true, () => sendMessage(message));
             } finally {
                 sendButton.disabled = false;
                 loading.style.display = 'none';
