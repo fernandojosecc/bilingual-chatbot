@@ -6,6 +6,12 @@
 
 # 📦 Dependencies
 node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
 
 # 🛠 Build outputs
 .next/
@@ -33,3 +39,11 @@ coverage/
 
 # 🔒 Misc
 *.pem
+
+# 🐍 Python specific
+.venv/
+venv/
+ENV/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
